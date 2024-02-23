@@ -192,7 +192,7 @@ public:
         pub_cloud = Node::create_publisher<sensor_msgs::msg::PointCloud2>("cloud", 100);
         pub_ground = Node::create_publisher<sensor_msgs::msg::PointCloud2>("ground", 100);
         pub_non_ground = Node::create_publisher<sensor_msgs::msg::PointCloud2>("nonground", 100);
-        sub_cloud = Node::create_subscription<sensor_msgs::msg::PointCloud2>(cloud_topic, rclcpp::SensorDataQoS().keep_last(1), std::bind(&PatchWorkpp<PointT>::callbackCloud, this, std::placeholders::_1));    
+        sub_cloud = Node::create_subscription<sensor_msgs::msg::PointCloud2>(cloud_topic, rclcpp::SensorDataQoS().keep_last(1), std::bind(&PatchWorkpp<PointT>::callbackCloud, this, std::placeholders::_1));
         callback_handle_ = this->add_on_set_parameters_callback(std::bind(&PatchWorkpp<PointT>::parametersCallback, this, std::placeholders::_1));
 
     };
@@ -294,7 +294,7 @@ private:
     void extract_initial_seeds(
             const int zone_idx, const pcl::PointCloud<PointT> &p_sorted,
             pcl::PointCloud<PointT> &init_seeds, double th_seed);
-    void callbackCloud(const sensor_msgs::msg::PointCloud2::ConstSharedPtr &cloud_msg);
+    void callbackCloud(const sensor_msgs::msg::PointCloud2::SharedPtr cloud_msg);
 
     /* ROS Callbacks Functions */
     rcl_interfaces::msg::SetParametersResult parametersCallback(
@@ -999,7 +999,7 @@ double PatchWorkpp<PointT>::xy2radius(const double &x, const double &y) {
 }
 
 template<typename PointT> inline
-void PatchWorkpp<PointT>::callbackCloud(const sensor_msgs::msg::PointCloud2::ConstSharedPtr &cloud_msg)
+void PatchWorkpp<PointT>::callbackCloud(const sensor_msgs::msg::PointCloud2::SharedPtr cloud_msg)
 {
     double time_taken;
 
