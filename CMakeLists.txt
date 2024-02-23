@@ -17,61 +17,61 @@ find_package(sensor_msgs REQUIRED)
 find_package(rclcpp_components REQUIRED)
 find_package(Boost 1.54 REQUIRED)
 
-set(INCLUDE_DIRS include 
-${ament_cmake_INCLUDE_DIRS} 
-${rclcpp_INCLUDE_DIRS}
-${pcl_ros_INCLUDE_DIRS} 
-${pcl_conversions_INCLUDE_DIRS}
-${std_msgs_INCLUDE_DIRS}
-${sensor_msgs_INCLUDE_DIRS}
-${rclcpp_components_INCLUDE_DIRS})
+set(INCLUDE_DIRS include
+        ${ament_cmake_INCLUDE_DIRS}
+        ${rclcpp_INCLUDE_DIRS}
+        ${pcl_ros_INCLUDE_DIRS}
+        ${pcl_conversions_INCLUDE_DIRS}
+        ${std_msgs_INCLUDE_DIRS}
+        ${sensor_msgs_INCLUDE_DIRS}
+        ${rclcpp_components_INCLUDE_DIRS})
 # Include
 include_directories(${INCLUDE_DIRS})
 
-set(LIBRARY_DIRS 
-${ament_cmake_LIBRARY_DIRS} 
-${rclcpp_LIBRARY_DIRS}
-${pcl_ros_LIBRARY_DIRS} 
-${pcl_conversions_LIBRARY_DIRS}
-${std_msgs_LIBRARY_DIRS}
-${sensor_msgs_LIBRARY_DIRS}
-${rclcpp_components_LIBRARY_DIRS})
+set(LIBRARY_DIRS
+        ${ament_cmake_LIBRARY_DIRS}
+        ${rclcpp_LIBRARY_DIRS}
+        ${pcl_ros_LIBRARY_DIRS}
+        ${pcl_conversions_LIBRARY_DIRS}
+        ${std_msgs_LIBRARY_DIRS}
+        ${sensor_msgs_LIBRARY_DIRS}
+        ${rclcpp_components_LIBRARY_DIRS})
 #  Linking
 link_directories(${LIBRARY_DIRS})
 
-set(LIBS 
-${ament_cmake_LIBRARIES} 
-${rclcpp_LIBRARIES} 
-${pcl_ros_LIBRARIES} 
-${pcl_conversions_LIBRARIES} 
-${std_msgs_LIBRARIES} 
-${sensor_msgs_LIBRARIES}
-${rclcpp_components_LIBRARIES})
+set(LIBS
+        ${ament_cmake_LIBRARIES}
+        ${rclcpp_LIBRARIES}
+        ${pcl_ros_LIBRARIES}
+        ${pcl_conversions_LIBRARIES}
+        ${std_msgs_LIBRARIES}
+        ${sensor_msgs_LIBRARIES}
+        ${rclcpp_components_LIBRARIES})
 
 
 add_executable(demo src/demo.cpp)
-target_link_libraries(demo ${LIBS} ${PCL_LIBRARIES} )
+target_link_libraries(demo ${LIBS} ${PCL_LIBRARIES})
 
 add_library(patchworkpp SHARED src/patchworkpp.cpp)
 target_compile_definitions(patchworkpp PUBLIC "PATCHWORKPP_COMPOSITION_BUILDING_DLL")
 target_link_libraries(patchworkpp ${LIBS})
 
 install(TARGETS
-patchworkpp
-ARCHIVE DESTINATION lib
-LIBRARY DESTINATION lib
-RUNTIME DESTINATION bin
+        patchworkpp
+        ARCHIVE DESTINATION lib
+        LIBRARY DESTINATION lib
+        RUNTIME DESTINATION bin
 )
 
 # ==== Install ====
 install(TARGETS demo
-ARCHIVE
-LIBRARY
-RUNTIME
-DESTINATION lib/${PROJECT_NAME})
+        ARCHIVE
+        LIBRARY
+        RUNTIME
+        DESTINATION lib/${PROJECT_NAME})
 
 install(DIRECTORY include/${PROJECT_NAME}/
-DESTINATION include/${PROJECT_NAME})
+        DESTINATION include/${PROJECT_NAME})
 
 install(DIRECTORY launch config rviz DESTINATION share/${PROJECT_NAME})
 
